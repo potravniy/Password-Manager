@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Password Manager">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <title>Password Manager</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <!--<link rel="icon" type="image/png" href="favicon.ico">-->
+
+    <!--  iOS  -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--<link rel="apple-touch-icon" href="/img/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="144x144"href="/img/icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="256x256"href="/img/icon-256x256.png">
+    <link rel="apple-touch-startup-image" href="/img/icon-256x256.png">-->
+
+    <!--  Google  -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <!--<link rel="icon" sizes="48x48"href="/img/icon-48x48.png">
+    <link rel="icon" sizes="96x96"href="/img/icon-96x96.png">
+    <link rel="icon" sizes="128x128"href="/img/icon-128x128.png">
+    <link rel="icon" sizes="144x144"href="/img/icon-144x144.png">
+    <link rel="icon" sizes="256x256"href="/img/icon-256x256.png">-->
+
+    <!--<link rel="manifest" href="manifest.json">-->
+    <meta name="theme-color" content="#fafafa">
+  </head>
+
+  <body>
+    <h1 class="app_header">
+      <img class="lock" src="/img/lock_locked.svg" alt="">
+      Password Manager
+      <div class="add_header__shadow"></div>
+    </h1>
+    <div id="root">
+      <noscript>
+        <p id="without_js">
+          Цей сервіс не може працювати з вимкненим Javascript.<br/>
+          Будь-ласка, увімкніть Javascript в налаштуваннях Вашого браузера.
+          <br/>
+          <hr/>
+          <br/>
+          This service is not available without Javascript.<br/>
+          Please, switch on Javascript in your browser settings to allow the service.
+        </p>
+      </noscript>
+    </div>
+
+    <script id="init-page__tpl" type="text/template">
+      <form id="init_page" autocomplete="nope">
+        <div class="header">
+          <h2><%- title %></h2>
+        </div>
+        <label for="user-name">Please enter your name:</label>
+        <input id="user-name" class="user-name" type="text" name="user-name" placeholder="your name, 2+ symbols" pattern=".{2,}" required>
+        <label for="master_password">Please enter your Master Password:</label>
+        <input id="master_password" class="password" type="password" name="master_password" placeholder="master password, 10+ symbols" pattern=".{10,}" required>
+        <% if( title === 'Register' ) { %>
+          <label for="confirm_password">Please confirm:</label>
+          <input id="confirm_password" class="password" type="password" name="confirm_password" placeholder="master password, 10+ symbols" pattern=".{10,}" required>
+        <% } %>
+        <input class="submit" type="submit" value="<%- title %>">
+        <% if( title === 'Register' ) { %>
+          <p class="warning"><strong>Warning:</strong> There is no way to restore your Master Password. If you forget it - stored data will be lost.</p>
+        <% } %>
+        <button class="switch"><%- switchBtn %></button>
+      </form>
+    </script>
+
+    <script id="dashboard__tpl" type="text/template">
+      <div class="header">
+        <h2>Credentials List</h2>
+      </div>
+      <ul class="list"></ul>
+      <button class="dashboard-btn add">+</button>
+      <button class="dashboard-btn save">
+        <img src="/img/save.svg" alt="">
+      </button>
+    </script>
+
+    <script id="dashboard-item__tpl" type="text/template">
+      <input class="dash target" type="text" name="target" placeholder="target">
+      <input class="dash username" type="text" placeholder="username" autocomplete="new-password">
+      <input class="dash pass" type="password" placeholder="password" onfocus="this.type='text'" onblur="this.type='password'" autocomplete="new-password">
+      <div class="dash btn_wrapper">
+        <button class="dash-btn copy"><img src="/img/copy.svg" alt=""></button>
+        <button class="dash-btn remove"><img src="/img/clear.svg" alt=""></button>
+      </div>
+    </script>
+
+    <script async defer src="bundle.js"></script>
+  </body>
+</html>

@@ -42,7 +42,15 @@ npm start
 
 and finally use it with your modern browser on
 
-//localhost:3210
+```
+http://localhost:3210
+```
+
+## Todo
+
+- [ ] Complete touch-icon set for mobile.
+- [ ] Add manifest and Service Worker for offline usage.
+
 
 #### Note
 

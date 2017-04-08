@@ -1,6 +1,6 @@
 # Password Manager
 
-> App for storage your passwords on your phone/tablet/computer.
+___App for storage your passwords on your phone/tablet/computer___
 
 ## Why
 

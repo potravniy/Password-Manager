@@ -25,8 +25,8 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.ProvidePlugin({
       _: 'underscore'
-    }),
-    new BundleAnalyzerPlugin()
+    })
+    // , new BundleAnalyzerPlugin()
   ],
   resolve: {
     modules: [

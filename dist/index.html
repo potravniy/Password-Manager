@@ -60,10 +60,10 @@
         <label for="user-name">Please enter your name:</label>
         <input id="user-name" class="user-name" type="text" name="user-name" placeholder="your name, 2+ symbols" pattern=".{2,}" required>
         <label for="master_password">Please enter your Master Password:</label>
-        <input id="master_password" class="password" type="password" name="master_password" placeholder="master password, 10+ symbols" pattern=".{10,}" required>
+        <input id="master_password" class="pass" type="password" name="master_password" placeholder="master password, 10+ symbols" pattern=".{10,}" required>
         <% if( title === 'Register' ) { %>
           <label for="confirm_password">Please confirm:</label>
-          <input id="confirm_password" class="password" type="password" name="confirm_password" placeholder="master password, 10+ symbols" pattern=".{10,}" required>
+          <input id="confirm_password" class="pass" type="password" name="confirm_password" placeholder="master password, 10+ symbols" pattern=".{10,}" required>
         <% } %>
         <input class="submit" type="submit" value="<%- title %>">
         <% if( title === 'Register' ) { %>
@@ -85,9 +85,9 @@
     </script>
 
     <script id="dashboard-item__tpl" type="text/template">
-      <input class="dash target" type="text" name="target" placeholder="target">
-      <input class="dash username" type="text" placeholder="username" autocomplete="new-password">
-      <input class="dash pass" type="password" placeholder="password" onfocus="this.type='text'" onblur="this.type='password'" autocomplete="new-password">
+      <input class="dash target" type="text" name="target" placeholder="target" value="<%- target %>">
+      <input class="dash username" type="text" placeholder="username" autocomplete="new-password" value="<%- username %>">
+      <input class="dash password" type="password" placeholder="password" onfocus="this.type='text'" onblur="this.type='password'" autocomplete="new-password" value="<%- password %>">
       <div class="dash btn_wrapper">
         <button class="dash-btn copy"><img src="/img/copy.svg" alt=""></button>
         <button class="dash-btn remove"><img src="/img/clear.svg" alt=""></button>

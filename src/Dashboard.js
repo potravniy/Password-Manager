@@ -4,9 +4,11 @@ import Backbone from 'backbone/backbone-min'
 import { setPasswords, getPasswords } from 'store'
 
 const ItemModel = Backbone.Model.extend({
-  target: '',
-  username: '',
-  pass: ''
+  defaults:{
+    target: '',
+    username: '',
+    password: ''
+  }
 })
 
 const Item = Marionette.ItemView.extend({
@@ -14,6 +16,35 @@ const Item = Marionette.ItemView.extend({
   tagName: 'li',
   className: 'listItem',
   model: ItemModel,
+  ui: {
+    target: '.target',
+    username: '.username',
+    password: '.password',
+    removeBtn: '.remove',
+    inputs: 'input.dash'
+  },
+  events: {
+    'blur @ui.inputs': 'updateModel',
+    'click @ui.removeBtn': 'removeModel'
+  },
+  updateModel: function(e){
+    const field = e.target.placeholder
+    if(this.model.get(field) === e.target.value) return
+    this.model.set(field, e.target.value)
+    const collection = this.model.collection.map(function(it){
+      return it.attributes
+    })
+    setPasswords(collection)
+  },
+  removeModel: function(){
+    const that = this
+    const collection = this.model.collection.reduce(function(memo, it){
+      if(it !== that.model) memo.push(it.attributes)
+      return memo
+    }, [])
+    setPasswords(collection)
+    this.model.collection.remove(this.model)
+  }
 })
 
 const DashboardView = Marionette.CompositeView.extend({
@@ -23,6 +54,9 @@ const DashboardView = Marionette.CompositeView.extend({
   childViewContainer: '.list',
   initialize: function(){
     this.collection = new Backbone.Collection(getPasswords())
+    if(this.collection.length === 0){
+      this.collection.push(new ItemModel())
+    }
   },
   ui: {
     addBtn: '.add'

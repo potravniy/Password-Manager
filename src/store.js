@@ -35,7 +35,7 @@ export const register = function (user, masterPassword) {
   return 0
 }
 export const setPasswords = function(passwords){
-  if(loggedUser && _.isArray(passwords)){
+  if(loggedUser && Array.isArray(passwords)){
     data = passwords
     upgateStorage()
     return 0
@@ -49,7 +49,6 @@ export const getPasswords = function(){
 function upgateStorage() {
   setTimeout(function(){
     storage[loggedUser] = AES.encrypt(JSON.stringify(data), masterPass).toString()
-    debugger
     window.localStorage.setItem(storageName, JSON.stringify(storage))
   }, 4)
 }

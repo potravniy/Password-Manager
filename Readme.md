@@ -46,12 +46,6 @@ and finally use it with your modern browser on
 http://localhost:3210
 ```
 
-## Todo
-
-- [ ] Complete touch-icon set for mobile.
-- [ ] Add manifest and Service Worker for offline usage.
-
-
 #### Note
 
 If you'd like seeing size of application components, please uncomment row 
@@ -59,7 +53,13 @@ If you'd like seeing size of application components, please uncomment row
 ```js
 new BundleAnalyzerPlugin()
 ```
+
 in webpack.config.js
+
+## Todo
+
+- [ ] Complete touch-icon set for mobile.
+- [ ] Add manifest and Service Worker for offline usage.
 
 ## License
 

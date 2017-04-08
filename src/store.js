@@ -11,6 +11,17 @@ let data,
 export const getUsersList = function(){
   return _.keys(storage)
 }
+export const register = function (user, masterPassword) {
+  if(storage[user]) {
+    data = loggedUser = masterPass = undefined
+    return 1
+  }
+  data = []
+  loggedUser = user
+  masterPass = masterPassword
+  upgateStorage()
+  return 0
+}
 export const logIn = function (user, masterPassword) {
   try {
     const bytes = AES.decrypt(storage[user], masterPassword)
@@ -23,19 +34,12 @@ export const logIn = function (user, masterPassword) {
     return 1
   }
 }
-export const register = function (user, masterPassword) {
-  if(storage[user]) {
-    data = loggedUser = masterPass = undefined
-    return 1
-  }
-  data = []
-  loggedUser = user
-  masterPass = masterPassword
-  upgateStorage()
+export const logOut = function(){
+  data = loggedUser = masterPass = undefined
   return 0
 }
 export const setPasswords = function(passwords){
-  if(loggedUser && Array.isArray(passwords)){
+  if(loggedUser){
     data = passwords
     upgateStorage()
     return 0

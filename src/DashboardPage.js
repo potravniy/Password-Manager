@@ -1,8 +1,10 @@
 import Marionette from 'backbone.marionette/lib/backbone.marionette.min'
-import Backbone from 'backbone/backbone-min'
+import Backbone from 'backbone'
 import Clipboard from 'clipboard/dist/clipboard.min'
 
 import { setPasswords, getPasswords } from 'store'
+
+const lockIcon = document.querySelector('.lock')
 
 const ItemModel = Backbone.Model.extend({
   defaults:{
@@ -23,6 +25,7 @@ const Item = Marionette.ItemView.extend({
   className: 'listItem',
   model: ItemModel,
   ui: {
+    target: '.target',
     password: '.password',
     removeBtn: '.remove',
     inputs: 'input.dash'
@@ -34,9 +37,7 @@ const Item = Marionette.ItemView.extend({
     'focus @ui.password': 'showPass'
   },
   updateModel: function(e){
-    if(this.model.get(e.target.placeholder) === e.target.value) {
-      return
-    } else {
+    if(this.model.get(e.target.placeholder) !== e.target.value) {
       this.model.set(e.target.placeholder, e.target.value)
       setPasswords(this.model.collection.toJSON())
     }
@@ -51,6 +52,13 @@ const Item = Marionette.ItemView.extend({
   },
   showPass: function(e){
     e.target.type='text'
+  },
+  onShow: function(){
+    if(this.model.get('target') === ''
+    && this.model.get('username') === ''
+    && this.model.get('password') === ''){
+      this.$el.find('.target').focus()
+    }
   }
 })
 
@@ -64,57 +72,50 @@ const DashboardView = Marionette.CompositeView.extend({
     this.collection.set(getPasswords())
     this.checkCollection()
     this.attachClipboardCopier()
-    document.querySelector('.lock').src = '/img/lock_open.svg'
+    lockIcon.src = '/img/lock_open.svg'
   },
   ui: {
     addBtn: '.add',
-    saveBtn: '.save',
     exitBtn: '.exit'
   },
   events: {
     'click @ui.addBtn': 'addNewItem',
-    'click @ui.saveBtn': 'save',
     'click @ui.exitBtn': 'exit'
   },
   collectionEvents: {
-    // "change": "checkCollection",
-    // "add": "checkCollection",
     "remove": "checkCollection"
   },
   addNewItem: function(){
     this.collection.push(new ItemModel())
   },
-  save: function(){
-    setPasswords(this.collection.toJSON())
-  },
   checkCollection: function(){
-    console.log('checkCollection')
     if(this.collection.length === 0){
       this.addNewItem()
     }
   },
   attachClipboardCopier: function(){
     this.clipboard = new Clipboard('.copy')
+    const $el = this.$el
     this.clipboard.on('success', function(e) {
-      const input = document.getElementById(e.trigger.dataset.clipboardTarget.substring(1))
-      const oldValue = input.value
-      input.value = ' copying...'
-      input.type = 'text'
-      input.style.color = "#494"
+      const input = $el.find(e.trigger.dataset.clipboardTarget)
+      const oldValue = input.val()
+      input.val(' copying...')
+      input.attr('type', 'text')
+      input.css('color', "#494")
       setTimeout(function(){
-        input.style.color = ''
-        input.type = 'password'
-        input.value = oldValue
+        input.css('color', "")
+        input.attr('type', 'password')
+        input.val(oldValue)
         input.blur()
       }, 1000)
     })
     this.clipboard.on('error', function(e) {
-      document.getElementById(e.trigger.dataset.clipboardTarget.substring(1))
+      $el.find(e.trigger.dataset.clipboardTarget)
       .blur()
     });
   },
   close: function(){
-    document.querySelector('.lock').src = '/img/lock_locked.svg'
+    lockIcon.src = '/img/lock_locked.svg'
     this.clipboard.off()
     this.clipboard.destroy()
   }

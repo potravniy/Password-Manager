@@ -1,5 +1,5 @@
 import Marionette from 'backbone.marionette/lib/backbone.marionette.min'
-import _ from 'underscore/underscore-min'
+import _ from 'underscore'
 
 import { register, getUsersList } from 'store'
 

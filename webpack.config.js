@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 var path = require('path')
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   devtool: '#eval-source-map',
@@ -24,7 +25,8 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.ProvidePlugin({
       _: 'underscore'
-    })
+    }),
+    new BundleAnalyzerPlugin()
   ],
   resolve: {
     modules: [

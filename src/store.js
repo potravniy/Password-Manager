@@ -1,4 +1,4 @@
-import _ from 'underscore/underscore-min'
+import _ from 'underscore'
 import AES from 'crypto-js/aes'
 import enc_utf8 from 'crypto-js/enc-utf8'
 

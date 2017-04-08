@@ -31,7 +31,7 @@ function controller(){
   const Dashboard = DashboardPage.extend({
     exit: function(){
       logOut()
-      this.lock()
+      this.close()
       region.show(new Login())
     }
   })

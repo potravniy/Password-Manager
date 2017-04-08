@@ -23,8 +23,6 @@ const Item = Marionette.ItemView.extend({
   className: 'listItem',
   model: ItemModel,
   ui: {
-    target: '.target',
-    username: '.username',
     password: '.password',
     removeBtn: '.remove',
     inputs: 'input.dash'
@@ -61,11 +59,12 @@ const DashboardView = Marionette.CompositeView.extend({
   className: 'dashboard',
   childView: Item,
   childViewContainer: '.list',
+  collection: new Backbone.Collection(),
   initialize: function(){
-    this.collection = new Backbone.Collection(getPasswords())
-    if(this.collection.length === 0){
-      this.addNewItem()
-    }
+    this.collection.set(getPasswords())
+    this.checkCollection()
+    this.attachClipboardCopier()
+    document.querySelector('.lock').src = '/img/lock_open.svg'
   },
   ui: {
     addBtn: '.add',
@@ -77,14 +76,24 @@ const DashboardView = Marionette.CompositeView.extend({
     'click @ui.saveBtn': 'save',
     'click @ui.exitBtn': 'exit'
   },
+  collectionEvents: {
+    // "change": "checkCollection",
+    // "add": "checkCollection",
+    "remove": "checkCollection"
+  },
   addNewItem: function(){
     this.collection.push(new ItemModel())
   },
   save: function(){
     setPasswords(this.collection.toJSON())
   },
-  onRender: function(){
-    document.querySelector('.lock').src = '/img/lock_open.svg'
+  checkCollection: function(){
+    console.log('checkCollection')
+    if(this.collection.length === 0){
+      this.addNewItem()
+    }
+  },
+  attachClipboardCopier: function(){
     this.clipboard = new Clipboard('.copy')
     this.clipboard.on('success', function(e) {
       const input = document.getElementById(e.trigger.dataset.clipboardTarget.substring(1))
@@ -104,12 +113,11 @@ const DashboardView = Marionette.CompositeView.extend({
       .blur()
     });
   },
-  lock: function(){
+  close: function(){
+    document.querySelector('.lock').src = '/img/lock_locked.svg'
     this.clipboard.off()
     this.clipboard.destroy()
-    document.querySelector('.lock').src = '/img/lock_locked.svg'
   }
 })
-
 
 export default DashboardView

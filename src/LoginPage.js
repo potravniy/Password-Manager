@@ -1,7 +1,6 @@
 import Marionette from 'backbone.marionette/lib/backbone.marionette.min'
-import _ from 'underscore'
 
-import { logIn } from 'store'
+import store from 'store'
 
 const LoginPageView = Marionette.ItemView.extend({
   template: '#init-page__tpl',
@@ -23,7 +22,7 @@ const LoginPageView = Marionette.ItemView.extend({
     const formData = this.ui.form.serializeArray()
     const user = formData[0].value
     const password = formData[1].value
-    if(logIn(user, password) === 0){
+    if(store.logIn(user, password) === 0){
       this.then()
     } else {
       alert('Wrong username / password')

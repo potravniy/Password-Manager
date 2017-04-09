@@ -1,6 +1,6 @@
 import Marionette from 'backbone.marionette/lib/backbone.marionette.min'
 
-import { getUsersList, logOut } from 'store'
+import store from 'store'
 import LoginPage from 'LoginPage'
 import RegisterPage from 'RegisterPage'
 import DashboardPage from 'DashboardPage'
@@ -30,13 +30,13 @@ function controller(){
 
   const Dashboard = DashboardPage.extend({
     exit: function(){
-      logOut()
+      store.logOut()
       this.close()
       region.show(new Login())
     }
   })
 
-  if(getUsersList().length === 0){
+  if(store.getUsersList().length === 0){
     region.show(new Register())
   } else {
     region.show(new Login())

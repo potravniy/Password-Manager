@@ -8,33 +8,26 @@
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=0">
     <title>Password Manager</title>
     <link rel="stylesheet" type="text/css" href="main.css">
-    <!--<link rel="icon" type="image/png" href="favicon.ico">-->
+    <link rel="icon" type="image/png" href="img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="img/favicon-16x16.png" sizes="16x16">
+    <link rel="shortcut icon" href="img/favicon.ico">
 
+    <!--  MS  -->
+    <meta name="msapplication-config" content="img/browserconfig.xml">
     <!--  iOS  -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <!--<link rel="apple-touch-icon" href="/img/apple-touch-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-touch-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="144x144"href="/img/icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="256x256"href="/img/icon-256x256.png">
-    <link rel="apple-touch-startup-image" href="/img/icon-256x256.png">-->
-
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+    <link rel="mask-icon" href="img/safari-pinned-tab.svg" color="#5bbad5">
     <!--  Google  -->
     <meta name="mobile-web-app-capable" content="yes">
-    <!--<link rel="icon" sizes="48x48"href="/img/icon-48x48.png">
-    <link rel="icon" sizes="96x96"href="/img/icon-96x96.png">
-    <link rel="icon" sizes="128x128"href="/img/icon-128x128.png">
-    <link rel="icon" sizes="144x144"href="/img/icon-144x144.png">
-    <link rel="icon" sizes="256x256"href="/img/icon-256x256.png">-->
-
-    <!--<link rel="manifest" href="manifest.json">-->
+    <link rel="manifest" href="img/manifest.json">
     <meta name="theme-color" content="#fafafa">
   </head>
 
   <body>
     <h1 class="app_header">
-      <img class="lock" src="/img/lock_locked.svg" alt="">
+      <img class="lock" src="img/lock_locked.svg" alt="">
       Password Manager
       <div class="add_header__shadow"></div>
     </h1>
@@ -79,24 +72,24 @@
       </div>
       <ul class="list"></ul>
       <button class="dashboard-btn exit">
-        <img src="/img/clear.svg" alt="">
+        <img src="img/clear.svg" alt="">
       </button>
       <button class="dashboard-btn save">
-        <img src="/img/save.svg" alt="">
+        <img src="img/save.svg" alt="">
       </button>
       <button class="dashboard-btn add">+</button>
     </script>
 
     <script id="dashboard-item__tpl" type="text/template">
       <input class="dash target" type="text" name="target" placeholder="target" value="<%- target %>">
-      <input class="dash username" type="text" placeholder="username" autocomplete="new-password" value="<%- username %>">
-      <input id="<%- clip %>" class="dash password" type="password" placeholder="password" autocomplete="new-password" value="<%- password %>">
+      <input class="dash username" type="text" name="username" placeholder="username" autocomplete="new-password" value="<%- username %>">
+      <input id="<%- clip %>" class="dash password" type="password" name="password" placeholder="password" autocomplete="new-password" value="<%- password %>">
       <div class="dash btn_wrapper">
         <button class="dash-btn copy" data-clipboard-target="#<%- clip %>">
-          <img src="/img/copy.svg" alt="">
+          <img src="img/copy.svg" alt="">
         </button>
         <button class="dash-btn remove">
-          <img src="/img/clear.svg" alt="">
+          <img src="img/clear.svg" alt="">
         </button>
       </div>
     </script>

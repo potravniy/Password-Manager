@@ -17,50 +17,56 @@ As soon name is required for logging into the app, you are free to allow usage o
 ## Install
 
 First, clone this repository with HTTPS:
-
 ```
 git clone https://github.com/potravniy/Password-Manager.git
 ```
 
 or with SSH:
-
 ```
 git clone git@github.com:potravniy/Password-Manager.git
 ```
 
 Then, in new Password-Manager folder use 
-
 ```
 npm install
 ```
 
 After that, you can start application running
-
 ```
 npm start
 ```
 
 and finally use it with your modern browser on
-
 ```
 http://localhost:3210
 ```
 
+## Bulid
+
+To buil production version use
+```
+npm run build
+```
+and all files for production will be ready to upload from /dist subfolder. 
+
+
+#### Live sample
+
+[Password Manager](https://potravny.od.ua/pm/)
+
 #### Note
 
-If you'd like seeing size of application components, please uncomment row 
+If you'd like seeing size of application components, please uncomment row in webpack.config.js
 
 ```js
 new BundleAnalyzerPlugin()
 ```
 
-in webpack.config.js
-
 ## Todo
 
-- [ ] Complete touch-icon set for mobile.
-- [ ] Add manifest and Service Worker for offline usage.
+- [x] Complete touch-icon set and manifest for mobile.
+- [ ] Add Service Worker and http/2 implementation for offline usage.
 
 ## License
 
-[MIT License](http://zenorocha.mit-license.org/)
+[MIT License](https://opensource.org/licenses/MIT)

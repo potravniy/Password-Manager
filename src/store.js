@@ -2,57 +2,66 @@ import _ from 'underscore'
 import AES from 'crypto-js/aes'
 import enc_utf8 from 'crypto-js/enc-utf8'
 
-const storageName = 'pm'
-const storage = JSON.parse(window.localStorage.getItem(storageName)) || {}
-let data,
-    loggedUser,
-    masterPass
+const store = function(){
+  const storageName = 'pm'
+  const state = {
+    data: undefined,
+    loggedUser: undefined,
+    masterPass: undefined,
+    storage: JSON.parse(window.localStorage.getItem(storageName)) || {}
+  }
+  const API = {
+    asyncUpgateLocalStorage: function () {
+      setTimeout(function(){
+        state.storage[state.loggedUser] = AES.encrypt(JSON.stringify(state.data), state.masterPass).toString()
+        window.localStorage.setItem(storageName, JSON.stringify(state.storage))
+      }, 0)
+    }
+  }
 
-export const getUsersList = function(){
-  return _.keys(storage)
-}
-export const register = function (user, masterPassword) {
-  if(storage[user]) {
-    data = loggedUser = masterPass = undefined
-    return 1
+  this.getUsersList = function(){
+    return _.keys(state.storage)
   }
-  data = []
-  loggedUser = user
-  masterPass = masterPassword
-  upgateStorage()
-  return 0
-}
-export const logIn = function (user, masterPassword) {
-  try {
-    const bytes = AES.decrypt(storage[user], masterPassword)
-    data = JSON.parse(bytes.toString(enc_utf8))
-    loggedUser = user
-    masterPass = masterPassword
+  this.register = function (user, masterPassword) {
+    if(state.storage[user]) {
+      state.data = state.loggedUser = state.masterPass = undefined
+      return 1
+    }
+    state.data = []
+    state.loggedUser = user
+    state.masterPass = masterPassword
+    API.asyncUpgateLocalStorage()
     return 0
-  } catch (e) {
-    data = loggedUser = masterPass = undefined
-    return 1
   }
-}
-export const logOut = function(){
-  data = loggedUser = masterPass = undefined
-  return 0
-}
-export const setPasswords = function(passwords){
-  if(loggedUser){
-    data = passwords
-    upgateStorage()
+  this.logIn = function (user, masterPassword) {
+    try {
+      const bytes = AES.decrypt(state.storage[user], masterPassword)
+      state.data = JSON.parse(bytes.toString(enc_utf8))
+      state.loggedUser = user
+      state.masterPass = masterPassword
+      return 0
+    } catch (e) {
+      state.data = state.loggedUser = state.masterPass = undefined
+      return 1
+    }
+  }
+  this.logOut = function(){
+    state.data = state.loggedUser = state.masterPass = undefined
     return 0
-  } else {
-    return 1
   }
+  this.setPasswords = function(passwords){
+    if(state.loggedUser){
+      state.data = passwords
+      API.asyncUpgateLocalStorage()
+      return 0
+    } else {
+      return 1
+    }
+  }
+  this.getPasswords = function(){
+    return state.loggedUser ? state.data : null
+  }
+  return this
 }
-export const getPasswords = function(){
-  return loggedUser ? data : null
-}
-function upgateStorage() {
-  setTimeout(function(){
-    storage[loggedUser] = AES.encrypt(JSON.stringify(data), masterPass).toString()
-    window.localStorage.setItem(storageName, JSON.stringify(storage))
-  }, 4)
-}
+
+export default new store()

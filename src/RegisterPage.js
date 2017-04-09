@@ -1,7 +1,7 @@
 import Marionette from 'backbone.marionette/lib/backbone.marionette.min'
 import _ from 'underscore'
 
-import { register, getUsersList } from 'store'
+import store from 'store'
 
 const RegisterPageView = Marionette.ItemView.extend({
   template: '#init-page__tpl',
@@ -21,7 +21,7 @@ const RegisterPageView = Marionette.ItemView.extend({
     'click @ui.login': 'showLoginPage'
   },
   checkName: function(e){
-    if(_.contains(getUsersList(), e.target.value)){
+    if(_.contains(store.getUsersList(), e.target.value)){
       alert('This name is used already.')
     }
   },
@@ -35,8 +35,7 @@ const RegisterPageView = Marionette.ItemView.extend({
       alert('Passwords are not equal!')
       return
     }
-    if(register(user, password) === 0){
-      alert('New user registered.')
+    if(store.register(user, password) === 0){
       this.then()
     } else {
       alert('This name is in use already.')

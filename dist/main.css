@@ -187,10 +187,12 @@ input.dash:focus {
   height: 40px;
 }
 .dashboard-btn:focus,
+.dashboard-btn.pseudo-focus,
 .dash-btn:focus {
   outline: none;
-  box-shadow: 0.3px 0.6px 3px 2px #9bf;
+  box-shadow: 0 0 5px 4px #9bf;
 }
+
 .dash-btn {
   width: 40px;
   height: 40px;
